@@ -82,6 +82,7 @@ public class OneClickAgilityPlugin extends Plugin
     }
 
     private static final int MARK_ID = 11849;
+    private static final int GOLD_ID = 995;
     private static final int HIGH_ALCH_GRAPHIC = 113;
     private static final Set<Integer> PORTAL_IDS = Set.of(36241,36242,36243,36244,36245,36246);
     private static final Set<Integer> SUMMER_PIE_ID = Set.of(7220,7218);
@@ -280,7 +281,23 @@ public class OneClickAgilityPlugin extends Plugin
             marks.remove(event.getTile());
         }
     }
+    @Subscribe
+    public void onItemSpawned(ItemSpawned event)
+    {
+        if (event.getItem().getId() == GOLD_ID)
+        {
+            marks.add(event.getTile());
+        }
+    }
 
+    @Subscribe
+    public void onItemDespawned(ItemDespawned event)
+    {
+        if (event.getItem().getId() == GOLD_ID)
+        {
+            marks.remove(event.getTile());
+        }
+    }
     private void addToCourse(TileObject tileObject)
     {
         if (course.obstacleIDs.contains(tileObject.getId()))
@@ -413,6 +430,9 @@ public class OneClickAgilityPlugin extends Plugin
 
             if(item.getId() == MARK_ID)
                 return true;
+            
+            if(item.getId() == GOLD_ID)
+                return true;
         }
         log.info("no matching item found");
         return false;
@@ -479,6 +499,16 @@ public class OneClickAgilityPlugin extends Plugin
         return client.createMenuEntry("Take",
                 "Mark of Grace",
                 MARK_ID,
+                MenuAction.GROUND_ITEM_THIRD_OPTION.getId(),
+                tile.getSceneLocation().getX(),
+                tile.getSceneLocation().getY(),
+                true);
+    }
+    private MenuEntry createMarkMenuEntry(Tile tile)
+    {
+        return client.createMenuEntry("Take",
+                "Coins",
+                GOLD_ID,
                 MenuAction.GROUND_ITEM_THIRD_OPTION.getId(),
                 tile.getSceneLocation().getX(),
                 tile.getSceneLocation().getY(),
