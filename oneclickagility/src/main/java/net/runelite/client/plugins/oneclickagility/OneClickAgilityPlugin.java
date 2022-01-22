@@ -49,7 +49,7 @@ import java.util.Set;
 
 @Extension
 @PluginDescriptor(
-        name = "One Click Agility",
+        name = "One Click Agility TEST",
         description = "Reclined gaming",
         tags = {"sundar", "pajeet","agility","one click","skilling"},
         enabledByDefault = false
